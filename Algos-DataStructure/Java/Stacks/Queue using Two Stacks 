@@ -1,0 +1,33 @@
+    
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int q = scanner.nextInt();
+        Stack<Integer> s1 = new Stack<Integer>();
+        Stack<Integer> s2 = new Stack<Integer>();
+        
+        for (int i = 0; i < q; i++) {
+            int type = scanner.nextInt();
+            
+            if (type == 1) {
+                int x = scanner.nextInt();
+                s1.push(x);
+            } else if (type == 2) {
+                if (s2.isEmpty()) {
+                    while (!s1.isEmpty()) {
+                        s2.push(s1.pop());
+                    }
+                }
+                s2.pop();
+            } else if (type == 3) {
+                if (s2.isEmpty()) {
+                    while (!s1.isEmpty()) {
+                        s2.push(s1.pop());
+                    }
+                }
+                System.out.println(s2.peek());
+            }
+        }
+    }
+
+    Summary // you listen to the scanner which checks the int, and then determine whether it's type 1,2 or 3 and solve accordingly
