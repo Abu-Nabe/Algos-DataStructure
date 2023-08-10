@@ -1,6 +1,4 @@
-public class Solution {
-
-    public static void main(String[] args) {
+public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Stack<StringBuilder> stack = new Stack<>();
         int q = scanner.nextInt();
@@ -35,5 +33,4 @@ public class Solution {
         }
         scanner.close();
 
-    }
 }
