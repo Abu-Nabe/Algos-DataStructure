@@ -3,7 +3,7 @@ public static int cookies(int k, List<Integer> A) {
         // wants me to make sure all arrays are over the letter k
         // and how many iterations it'll take to be over the letter k
         // Asking me to first to the smallest values, that are lower than k
-        // PrioQ auto sorts int array
+        // PrioQ auto sorts array
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         pq.addAll(A);
 
