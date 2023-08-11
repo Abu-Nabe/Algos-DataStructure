@@ -1,71 +1,21 @@
-class MinHeap {
-    constructor() {
-        this.heap = [];
-    }
+public static int cookies(int k, List<Integer> A) {
+        // Write your code here
+        // wants me to make sure all arrays are over the letter k
+        // and how many iterations it'll take to be over the letter k
+        // Asking me to first to the smallest values, that are lower than k
+        // PrioQ auto sorts int array
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        pq.addAll(A);
 
-    push(value) {
-        this.heap.push(value);
-        this.bubbleUp(this.heap.length - 1);
-    }
-
-    pop() {
-        if (this.isEmpty()) {
-            return null;
-        }
-        if (this.heap.length === 1) {
-            return this.heap.pop();
-        }
-
-        const root = this.heap[0];
-        this.heap[0] = this.heap.pop();
-        this.bubbleDown(0);
-        return root;
-    }
-
-    isEmpty() {
-        return this.heap.length === 0;
-    }
-
-    bubbleUp(index) {
-        const parentIndex = Math.floor((index - 1) / 2);
-        if (parentIndex >= 0 && this.heap[index] < this.heap[parentIndex]) {
-            [this.heap[index], this.heap[parentIndex]] = [this.heap[parentIndex], this.heap[index]];
-            this.bubbleUp(parentIndex);
-        }
-    }
-
-    bubbleDown(index) {
-        const leftChild = index * 2 + 1;
-        const rightChild = index * 2 + 2;
-        let smallest = index;
-
-        if (leftChild < this.heap.length && this.heap[leftChild] < this.heap[smallest]) {
-            smallest = leftChild;
-        }
-        if (rightChild < this.heap.length && this.heap[rightChild] < this.heap[smallest]) {z
-            smallest = rightChild;
+        int count = 0;
+        while (pq.size() > 1 && pq.peek() < k) {
+            int leastSweet = pq.poll();
+            int secondLeastSweet = pq.poll();
+            int newSweetness = leastSweet + 2 * secondLeastSweet;
+            pq.offer(newSweetness);
+            count++;
         }
 
-        if (smallest !== index) {
-            [this.heap[index], this.heap[smallest]] = [this.heap[smallest], this.heap[index]];
-            this.bubbleDown(smallest);
-        }
-    }
-}
+        return pq.peek() >= k ? count : -1;
 
-function cookies(k, A) {
-    const pq = new MinHeap();
-
-    A.forEach(cookie => pq.push(cookie));
-
-    let operations = 0;
-    while (pq.heap.length >= 2 && pq.heap[0] < k) {
-        const leastSweet = pq.pop();
-        const secondLeastSweet = pq.pop();
-        const newSweetness = leastSweet + 2 * secondLeastSweet;
-        pq.push(newSweetness);
-        operations++;
-    }
-
-    return pq.heap[0] >= k ? operations : -1;
 }
