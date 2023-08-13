@@ -1,36 +1,64 @@
-class Solution {
+const minCostConnectPoints = (points) => {
+    const isBaseCase = ((points.length === 0) || (1000 <= points.length));
+    if (isBaseCase) return 0;
 
-    // Time Complexity: O(N^2 log(N)) where N is the length of points. N^2 comes from the fact we need to find the distance between a currNode and every other node to pick the shortest distance. log(N) comes from Priority Queue
-    // Space Complexity: O(N^2)
-    public int minCostConnectPoints(int[][] points) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]); // edge weight, the index of next node
-        pq.offer(new int[] { 0, 0 });
-        int len = points.length;
-        Set<Integer> visited = new HashSet<>();
-        int cost = 0;
+    const { graph, seen, minHeap } = buildGraph(points);
 
-        // When visited.size() == points.len meaning that all the nodes has been connected.
-        while (visited.size() < len) {
-            int[] arr = pq.poll();
+    return search(points, graph, seen, minHeap);
+};
 
-            int weight = arr[0];
-            int currNode = arr[1];
+const initGraph = (points) => ({
+    graph: new Array(points.length).fill().map(() => []),
+    seen: new Array(points.length).fill(false),
+    minHeap: new MinPriorityQueue()
+})
 
-            if (visited.contains(currNode)) continue;
+const buildGraph = (points) => {
+    const { graph, seen, minHeap } = initGraph(points);
 
-            visited.add(currNode);
-            cost += weight;
+    for (let src = 0; src < (points.length - 1); src++) {
+        for (let dst = (src + 1); (dst < points.length); dst++) {
+            const cost = getCost(points, src, dst);
 
-            for (int nextNode = 0; nextNode < len; nextNode++) {
-                if (!visited.contains(nextNode)) {
-                    int nextWeight =
-                        Math.abs(points[nextNode][0] - points[currNode][0]) +
-                        Math.abs(points[nextNode][1] - points[currNode][1]);
-                    pq.offer(new int[] { nextWeight, nextNode });
-                }
-            }
+            graph[src].push([ dst, cost ]);
+            graph[dst].push([ src, cost ]);
         }
+    }
 
-        return cost;
+    const [ src, cost, priority ] = [ 0, 0, 0 ];
+    const node = [ src, cost ];
+
+    minHeap.enqueue(node, priority);
+
+    return { graph, seen, minHeap };
+}
+
+const getCost = (points, src, dst) => {
+    const [ [ x1, y1 ], [ x2, y2 ] ] = [ points[src], points[dst] ];
+
+    return (Math.abs(x1 - x2) + Math.abs(y1 - y2));
+}
+
+const search = (points, graph, seen, minHeap, nodeCount = 0, cost = 0) => {
+    while (nodeCount < points.length) {
+        let [ src, srcCost ] = minHeap.dequeue().element;
+
+        if (seen[src]) continue;
+        seen[src] = true;
+
+        cost += srcCost;
+        nodeCount += 1;
+
+        checkNeighbors(graph, src, seen, minHeap);
+    }
+
+    return cost;
+}
+
+const checkNeighbors = (graph, src, seen, minHeap) => {
+    for (const [ dst, dstCost ] of graph[src]) {
+        if (seen[dst]) continue;
+
+        minHeap.enqueue([ dst, dstCost ], dstCost);
     }
 }
