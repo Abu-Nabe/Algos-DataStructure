@@ -1,0 +1,18 @@
+Sum of Two Integers
+
+class Solution {
+    public int getSum(int a, int b) {
+        while (b != 0) {
+            // Calculate the common bits set in both 'a' and 'b', then shift them left by 1.
+            int tmp = (a & b) << 1;
+            
+            // XOR operation to set 'a' to the new value without common bits.
+            a = (a ^ b);
+            
+            // Set 'b' to the common bits shifted left by 1.
+            b = tmp;
+        }
+        // When 'b' becomes 0, the loop exits, and 'a' contains the final sum.
+        return a;
+    }
+}
