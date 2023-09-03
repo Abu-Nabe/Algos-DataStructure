@@ -1,0 +1,19 @@
+Array With Elements Not Equal to Average of Neighbors
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var rearrangeArray = function(nums) {
+    nums.sort((a, b) => {
+        return a - b; // For ascending order, use a - b; for descending order, use b - a
+    });
+
+    for(var i = 0; i < nums.length-1; i+= 2){
+        let temp = nums[i];
+        nums[i] = nums[i+1];
+        nums[i+1] = temp;
+    }
+
+    return nums;
+};
