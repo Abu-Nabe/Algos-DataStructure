@@ -1,0 +1,31 @@
+Baseball Game
+
+class Solution {
+    public int calPoints(String[] operations) {
+       Stack<Integer> mainStack = new Stack<>();
+       int count = 0;
+       for(String operation: operations){
+            if(operation.equals("C")){
+                mainStack.pop();
+            }else if(operation.equals("D")){
+                int value = mainStack.peek() * 2;
+                mainStack.add(value);
+            }else if(operation.equals("+")){
+                int score1 = mainStack.pop();
+                int score2 = mainStack.peek();
+                int score3 = score1 + score2;
+                mainStack.push(score1);
+                mainStack.push(score3);
+            }else{
+                int value = Integer.parseInt(operation);
+                mainStack.add(value);
+            }
+       }
+       
+       while(!mainStack.isEmpty()){
+            int value = mainStack.pop();
+            count += value;
+        }
+       return count;
+    }
+}
