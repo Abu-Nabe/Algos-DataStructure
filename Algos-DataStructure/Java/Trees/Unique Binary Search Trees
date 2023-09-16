@@ -1,0 +1,32 @@
+Unique Binary Search Trees
+
+class Solution {
+    public int numTrees(int n) {
+        // Create an array to store the number of unique binary search trees for each number from 0 to n.
+        int dp[] = new int[n + 1];
+        
+        // Base cases:
+        // For n = 0, there is one unique empty tree (a valid base case).
+        dp[0] = 1;
+        // For n = 1, there is also only one unique tree with a single root node.
+        dp[1] = 1;
+        
+        // Loop through the rest of the numbers from 2 to n to calculate the number of unique trees.
+        for (int i = 2; i < dp.length; i++) {
+            int l = 0; // Left subtree size (initially 0).
+            int r = i - 1; // Right subtree size (initially i-1).
+            
+            // Calculate the number of unique trees for the current value of i using the concept of Catalan Numbers.
+            while (l <= (i - 1)) {
+                // Multiply the number of unique trees in the left subtree by the number of unique trees in the right subtree
+                // and accumulate the result in dp[i].
+                dp[i] += dp[l] * dp[r];
+                l++;
+                r--;
+            }
+        }
+        
+        // Return the number of unique binary search trees for n.
+        return dp[n];
+    }
+}
