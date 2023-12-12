@@ -1,0 +1,19 @@
+
+
+Maximum Product of Two Elements in an Array
+
+class Solution {
+    public int maxProduct(int[] nums) {
+        PriorityQueue<Integer> prioQ = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+
+        for(int number: nums){
+            prioQ.add(number);
+        }
+
+        int firstMax = prioQ.poll();
+        int secondMax = prioQ.poll();
+
+        int total = (secondMax - 1) * (firstMax - 1);
+        return total;
+    }
+}
