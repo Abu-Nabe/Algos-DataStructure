@@ -1,0 +1,12 @@
+public boolean hasDuplicate(int[] nums) {
+      HashMap<Integer, Boolean> hashMap = new HashMap<>();
+
+      for (int i = 0; i < nums.length; i++) {
+        if (hashMap.containsKey(nums[i])) {
+            return true;  // Duplicate found
+        }
+       hashMap.put(nums[i], true);  // add number to hash map to indicate it's apperance
+     }
+
+    return false;  // No duplicates found
+}
