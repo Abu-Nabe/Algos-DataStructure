@@ -1,0 +1,19 @@
+public List<List<String>> groupAnagrams(String[] strs) {
+    // Map to store the anagrams by their sorted string as the key
+    Map<String, List<String>> map = new HashMap<>();
+
+    // Loop through each string in the input array
+    for (String str : strs) {
+        // Convert the string to a char array, sort it, and convert it back to a string
+        char[] chars = str.toCharArray();
+        Arrays.sort(chars);
+        String sortedStr = new String(chars);
+
+        // Add the original string to the list corresponding to the sorted string key
+        map.putIfAbsent(sortedStr, new ArrayList<>());
+        map.get(sortedStr).add(str);
+    }
+
+    // Return the values of the map as a list of anagram groups
+    return new ArrayList<>(map.values());
+}
