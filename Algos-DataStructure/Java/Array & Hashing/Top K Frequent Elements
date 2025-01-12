@@ -3,6 +3,8 @@ import java.util.*;
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         HashMap<Integer, Integer> hashMap = new HashMap<>();
+
+        // instead of count better to use map.getOrDefault
         int count = 1;
 
         // Sorting the array
