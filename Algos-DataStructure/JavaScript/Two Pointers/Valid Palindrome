@@ -1,0 +1,19 @@
+Q: Given a string s, return true if it is a palindrome, otherwise return false.
+
+isPalindrome(s) {
+    const nonAlphaNumeric = s.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+
+    let left = 0;
+    let right = nonAlphaNumeric.length - 1;
+
+    while (left < right) {
+        // Compare characters
+        if (nonAlphaNumeric[left] !== nonAlphaNumeric[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+
+    return true;
+}
