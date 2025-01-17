@@ -1,0 +1,16 @@
+Return the indices (1-indexed) of two numbers, [index1, index2], 
+such that they add up to a given target number target and index1 < index2. 
+Note that index1 and index2 cannot be equal,
+therefore you may not use the same element twice.
+
+twoSum(numbers, target) {
+    for (let i = 0; i < numbers.length; i++) {  // Start from 0 to include the first element
+        for (let j = i + 1; j < numbers.length; j++) {  // Compare with the next elements
+            let targetSum = numbers[i] + numbers[j];
+            if (targetSum === target) {
+                return [i+1, j+1];  // Return the indices of the pair that sums to target
+            }
+        }
+    }
+    return [];  // Return an empty array if no pair is found
+}
