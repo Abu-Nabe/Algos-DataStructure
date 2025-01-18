@@ -1,0 +1,25 @@
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] where nums[i] + nums[j] + nums[k] == 0, and the indices i, j and k are all distinct.
+
+threeSum(nums) {
+    const result = [];
+    if (!Array.isArray(nums) || nums.length < 3) return result;
+
+    nums.sort((a, b) => a - b); // Sort the array in ascending order
+
+    for (let i = 0; i < nums.length; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) continue; // Skip duplicates for i
+
+        for (let j = i + 1; j < nums.length; j++) {
+            if (j > i + 1 && nums[j] === nums[j - 1]) continue; // Skip duplicates for j
+
+            for (let k = j + 1; k < nums.length; k++) {
+                if (k > j + 1 && nums[k] === nums[k - 1]) continue; // Skip duplicates for k
+
+                if (nums[i] + nums[j] + nums[k] === 0) {
+                    result.push([nums[i], nums[j], nums[k]]);
+                }
+            }
+        }
+    }
+    return result;
+}
