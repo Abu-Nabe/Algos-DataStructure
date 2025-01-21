@@ -3,7 +3,7 @@ Given a square matrix, calculate the absolute difference between the sums of its
 function diagonalDifference(arr) {
     let leftSum = 0;
     let rightSum = 0;
-    let n = arr.length; // Number of rows (or columns, for a square matrix)
+    let n = arr.length;
 
     for (let i = 0; i < n; i++) {
         leftSum += arr[i][i];        // Left diagonal element
