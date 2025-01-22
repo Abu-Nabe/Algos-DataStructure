@@ -1,0 +1,24 @@
+function countingSort(arr) {
+    // Write your code here
+    arr.sort((a, b) => a - b);
+    let arrayFrequency = new Array(100).fill(0);
+    let frequencyMap = new Map();
+    
+    for (let num of arr) {
+        if (frequencyMap.has(num)) {
+            frequencyMap.set(num, frequencyMap.get(num) + 1);
+        } else {
+            frequencyMap.set(num, 1);
+        }
+    }
+    
+    for (let i = 0; i < arrayFrequency.length; i++) {
+        if (frequencyMap.has(i)) {
+            arrayFrequency[i] = frequencyMap.get(i);
+        }
+    }
+
+    // Convert the array to a string
+    let resultString = arrayFrequency.join(" ");
+    console.log(resultString);
+}
