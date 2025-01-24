@@ -1,0 +1,36 @@
+You are given a map of a server center, represented as a m * n integer matrix grid, 
+where 1 means that on that cell there is a server and 0 means that it is no server. 
+Two servers are said to communicate if they are on the same row or on the same column.
+
+public int countServers(int[][] grid) {
+    int serversCommunicating = 0;
+
+    int row = grid.length;
+    int column = grid[0].length;
+
+    // Count the number of servers in each row and column
+    int[] rowCount = new int[row];
+    int[] columnCount = new int[column];
+
+    // First pass: count servers in rows and columns
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            if (grid[i][j] == 1) {
+                rowCount[i]++;
+                columnCount[j]++;
+            }
+        }
+    }
+
+    // Second pass: calculate servers that communicate
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            // A server communicates if there is more than 1 server in its row or column
+            if (grid[i][j] == 1 && (rowCount[i] > 1 || columnCount[j] > 1)) {
+                serversCommunicating++;
+            }
+        }
+    }
+
+    return serversCommunicating;
+}
