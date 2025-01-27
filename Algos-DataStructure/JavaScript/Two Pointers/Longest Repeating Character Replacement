@@ -1,0 +1,32 @@
+You are given a string s consisting of only uppercase english characters and an integer k. 
+You can choose up to k characters of the string and replace them with any other uppercase English character.
+
+characterReplacement(s, k) {
+    const hashMap = new Map(); // To count character frequencies
+    let left = 0;
+    let maxCount = 0; // Maximum frequency of a character in the current window
+    let maxLength = 0; // Maximum length of a valid substring
+
+    for (let right = 0; right < s.length; right++) {
+        const currentChar = s[right];
+        hashMap.set(currentChar, (hashMap.get(currentChar) || 0) + 1);
+
+        // Update the maximum frequency of any character in the current window
+        maxCount = Math.max(maxCount, hashMap.get(currentChar));
+
+        // Calculate the number of replacements needed for the current window
+        const replacementsNeeded = (right - left + 1) - maxCount;
+
+        // If replacements exceed k, shrink the window from the left
+        if (replacementsNeeded > k) {
+            const leftChar = s[left];
+            hashMap.set(leftChar, hashMap.get(leftChar) - 1);
+            left++;
+        }
+
+        // Update the maximum length of the valid window
+        maxLength = Math.max(maxLength, right - left + 1);
+    }
+
+    return maxLength;
+}
